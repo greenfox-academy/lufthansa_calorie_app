@@ -20,7 +20,10 @@
     "jasmine": "^2.4.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-watch": "^4.3.5",
+    "jshint": "^2.9.1"
   },
   "description": ""
 }
