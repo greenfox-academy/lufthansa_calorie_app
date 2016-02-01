@@ -1,4 +1,10 @@
-'use strict'
+'use strict';
 
-console.log('Hello World!');
 
+
+function sayHello() {
+  return 'Hello!';
+}
+
+
+module.exports = sayHello;
