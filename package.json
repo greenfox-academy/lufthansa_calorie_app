@@ -15,7 +15,9 @@
     "url": "https://github.com/greenfox-academy/lufthansa_calorie_app/issues"
   },
   "homepage": "https://github.com/greenfox-academy/lufthansa_calorie_app#readme",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.13.4"
+  },
   "devDependencies": {
     "gulp": "^3.9.0"
   },
