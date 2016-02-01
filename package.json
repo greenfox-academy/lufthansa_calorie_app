@@ -16,6 +16,8 @@
   },
   "homepage": "https://github.com/greenfox-academy/lufthansa_calorie_app#readme",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  },
   "description": ""
 }
