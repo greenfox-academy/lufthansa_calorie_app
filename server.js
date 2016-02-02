@@ -42,9 +42,7 @@ function getOne (id, cb) {
 	pg.connect(process.env.DATABASE_URL, function(err, client, done) {
 		client.query('SELECT meal_id, name, calorie, date WHERE id= ?', id, function(err, result) {
 			done();
-			if (err) {
-				throw err;	
-			};
+			if (err) throw err;
 			console.log('result: ', result);
 			return cb({'id': id});
 		});
