@@ -24,12 +24,10 @@ gulp.task('jasmine-test', function () {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('./*.js', ['jshint']);
+  gulp.watch('./*.js', ['jshint','jasmine-test']);
 });
 
-gulp.task('watch-files', function() {
-  gulp.watch('./hello-world.js', ['jasmine-test']);
-});
+gulp.task('checkAll', ['jshint','jasmine-test']);
 
 gulp.task('default', ['watch']);
 
