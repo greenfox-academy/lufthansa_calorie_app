@@ -3,8 +3,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var pg = require('pg');
-
 var app = express();
+var port = process.env.PORT || 3000;
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -30,4 +30,6 @@ function getAll(callback) {
 	});
 };
 
-module.exports = app;
+app.listen(port, function() {
+	console.log('app listen on port: ', port)
+});
