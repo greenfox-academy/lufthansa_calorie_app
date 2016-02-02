@@ -34,7 +34,6 @@ app.get('/meals/:id', function (req, res) {
 	getOne(req.params.id, function (res) {
 			console.log('response: ', res);
 			res.json(result);
-		}
 	});
 });
 
