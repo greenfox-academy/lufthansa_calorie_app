@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var pg = require('pg');
 var app = express();
 var port = process.env.PORT || 3000;
+var databaseUrl = process.env.DATABASE_URL || 'postgres://postgres:greenfox@localhost/calorie';
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -22,7 +23,8 @@ app.get('/meals', function (req, res) {
 });
 
 function getAll(cb) {
-	pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+	pg.connect(databaseUrl, function(err, client, done) {
+		console.log(err);
 		client.query('SELECT * FROM meal_table', function(err, result) {
 			done();
 			cb(err, result);
@@ -39,7 +41,8 @@ app.get('/meals/:id', function (req, res) {
 
 
 function getOne (id, cb) {
-	pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+	pg.connect(databaseUrl, function(err, client, done) {
+		console.log(err);
 		client.query('SELECT meal_id, name, calorie, date WHERE id= ?', id, function(err, result) {
 			done();
 			if (err) throw err;
