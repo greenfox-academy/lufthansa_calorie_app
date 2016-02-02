@@ -18,7 +18,7 @@ app.get('/meals', function (req, res) {
 		}
 		else {
 		res.json(result.rows);
-		};
+		}
 	});
 });
 
@@ -30,10 +30,10 @@ function getAll(cb) {
 			cb(err, result);
 		});
 	});
-};
+}
 
 app.get('/meals/:id', function (req, res) {
-	getOne(req.params.id, function (res) {
+	getOne(req.params.id, function (result) {
 			console.log('response: ', res);
 			res.json(result);
 	});
@@ -61,5 +61,5 @@ function getOne (id, cb) {
 
 
 app.listen(port, function() {
-	console.log('app listen on port: ', port)
+	console.log('app listen on port: ', port);
 });

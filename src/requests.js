@@ -17,7 +17,7 @@ app.get('/meals', function (request, response) {
 		}
 		else {
 		response.json(result.rows);
-		};
+		}
 	});
 });
 
@@ -28,8 +28,8 @@ function getAll(callback) {
 			callback(err, result);
 		});
 	});
-};
+}
 
 app.listen(port, function() {
-	console.log('app listen on port: ', port)
+	console.log('app listen on port: ', port);
 });
