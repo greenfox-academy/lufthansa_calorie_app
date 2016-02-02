@@ -12,6 +12,7 @@ gulp.task('jshint', function() {
   return gulp.src('./*.js')
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('fail'))
         .pipe(notify({
             title: 'JSHint',
             message: 'JSHint Passed. Let it fly!',
