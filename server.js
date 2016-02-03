@@ -93,7 +93,7 @@ function addMealItem(itemDetails, callback) {
   console.log(itemDetails);
   pg.connect(databaseUrl, function(err, client, done) {
     client.query(
-      'INSERT INTO meal_table (name, calorie, date) VALUES($1, $2, $3)',
+      'INSERT INTO meal_table (name, calorie, date) VALUES ($1, $2, $3)',
      [itemDetails.name, itemDetails.calorie, itemDetails.date],
       function(err, result) {
         done();
