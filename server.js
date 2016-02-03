@@ -69,11 +69,67 @@ app.delete('/meals/delete/:id', function(req, res) {
 function deleteItem(id, callback) {
   pg.connect(databaseUrl, function(err, client, done) {
   		client.query('DELETE FROM meal_table WHERE meal_id=$1', id, function(err, result) {
-        done();    	
-		return callback(result);
+        done();
+       if (err) throw err;
+  			console.log('result: ', result);
+  			return callback({'id': id});
   		});
     });
 }
+
+
+app.post('/meals', function (req, res) {
+  addMealItem(req.body, function(err, result) {
+    if (err) {
+      console.error(err); res.send('Error ' + err);
+    }
+    else {
+      res.json(result);
+    }
+  });
+});
+
+
+function addMealItem(itemDetails, callback) {
+  pg.connect(databaseUrl, function(err, client, done) {
+    client.query('INSERT INTO meals SET $1', itemDetails, function(err, result) {
+      done();
+      if (err) throw err;
+        // console.log('result: ', result);
+        console.log('result insertId: ', result.insertId);
+        return getOne(result.insertId, callback);
+    });
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
