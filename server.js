@@ -83,18 +83,21 @@ app.post('/meals', function (req, res) {
       console.error(err); res.send('Error ' + err);
     }
     else {
-      res.json(result);
+      res.json(result.rows);
+      console.log(result);
     }
   });
 });
 
-
 function addMealItem(itemDetails, callback) {
+  console.log(itemDetails);
   pg.connect(databaseUrl, function(err, client, done) {
-    client.query('INSERT INTO meals SET $1', itemDetails, function(err, result) {
-      done();
-      if (err) throw err;
-        // console.log('result: ', result);
+    client.query(
+      'INSERT INTO meal_table (name, calorie, date) VALUES($1, $2, $3)',
+     [itemDetails.name, itemDetails.calorie, itemDetails.date],
+      function(err, result) {
+        done();
+        console.log('result: ', result);
         console.log('result insertId: ', result.insertId);
         return getOne(result.insertId, callback);
     });
