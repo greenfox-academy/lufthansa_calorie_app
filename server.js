@@ -39,7 +39,7 @@ app.get('/meals/:id', function (req, res) {
 			}
 			else {
 				console.log('response: ', res);
-				res.json(result);
+				res.json(result.rows);
 			}
 	});
 });
@@ -48,7 +48,7 @@ app.get('/meals/:id', function (req, res) {
 function getOne (id, cb) {
 	pg.connect(databaseUrl, function(err, client, done) {
 		console.log(err);
-		client.query('SELECT * FROM meal_table WHERE id= ?', id, function(err, result) {
+		client.query('SELECT * FROM meal_table WHERE meal_id= $1', id, function(err, result) {
 			done();
 			return cb(err, result);
 		});
@@ -61,14 +61,14 @@ app.delete('/meals/delete/:id', function(req, res) {
     		console.error(err); res.send('Error ' + err); 
     	} 
     	else {
-      	    res.json(result);
+      	    res.json(result.rows);
       	}
 	  });
 });
 
 function deleteItem(id, callback) {
   pg.connect(databaseUrl, function(err, client, done) {
-  		client.query('DELETE FROM meal_table WHERE id=?', id, function(err, result) {
+  		client.query('DELETE FROM meal_table WHERE meal_id=$1', id, function(err, result) {
         done();    	
 		return callback(result);
   		});
