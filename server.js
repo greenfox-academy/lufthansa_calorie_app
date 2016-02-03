@@ -14,17 +14,16 @@ app.use(bodyParser.json());
 app.get('/meals', function (req, res) {
 	getAll(function (err, result) {
 		if (err) {
-		 console.error(err); res.send('Error ' + err);
+			console.error(err); res.send('Error ' + err);
 		}
 		else {
-		res.json(result.rows);
+			res.json(result.rows);
 		}
 	});
 });
 
 function getAll(cb) {
 	pg.connect(databaseUrl, function(err, client, done) {
-		console.log(err);
 		client.query('SELECT * FROM meal_table', function(err, result) {
 			done();
 			cb(err, result);
@@ -32,10 +31,16 @@ function getAll(cb) {
 	});
 }
 
+
 app.get('/meals/:id', function (req, res) {
-	getOne(req.params.id, function (result) {
-			console.log('response: ', res);
-			res.json(result);
+	getOne(req.params.id, function (err, result) {
+			if (err) {
+				console.error(err); res.send('Error ' + err);
+			}
+			else {
+				console.log('response: ', res);
+				res.json(result);
+			}
 	});
 });
 
@@ -43,19 +48,32 @@ app.get('/meals/:id', function (req, res) {
 function getOne (id, cb) {
 	pg.connect(databaseUrl, function(err, client, done) {
 		console.log(err);
-		client.query('SELECT meal_id, name, calorie, date WHERE id= ?', id, function(err, result) {
+		client.query('SELECT * FROM meal_table WHERE id= ?', id, function(err, result) {
 			done();
-			if (err) throw err;
-			console.log('result: ', result);
-			return cb({'id': id});
+			return cb(err, result);
 		});
 	});
 }
 
+app.delete('/meals/delete/:id', function(req, res) {
+  deleteItem(req.params.id, function(err, result) {
+  	if (err) {
+    		console.error(err); res.send('Error ' + err); 
+    	} 
+    	else {
+      	    res.json(result);
+      	}
+	  });
+});
 
-
-
-
+function deleteItem(id, callback) {
+  pg.connect(databaseUrl, function(err, client, done) {
+  		client.query('DELETE FROM meal_table WHERE id=?', id, function(err, result) {
+        done();    	
+		return callback(result);
+  		});
+    });
+}
 
 
 
