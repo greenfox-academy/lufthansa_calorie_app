@@ -76,7 +76,6 @@ function deleteItem(id, callback) {
     });
 }
 
-
 app.post('/meals', function (req, res) {
   addMealItem(req.body, function(err, result) {
     if (err) {
@@ -90,16 +89,14 @@ app.post('/meals', function (req, res) {
 });
 
 function addMealItem(itemDetails, callback) {
-  console.log(itemDetails);
   pg.connect(databaseUrl, function(err, client, done) {
     client.query(
-      'INSERT INTO meal_table (name, calorie, date) VALUES ($1, $2, $3)',
+      'INSERT INTO meal_table (name, calorie, date) VALUES ($1, $2, $3) returning meal_id',
      [itemDetails.name, itemDetails.calorie, itemDetails.date],
       function(err, result) {
         done();
         console.log('result: ', result);
-        console.log('result insertId: ', result.insertId);
-        return getOne(result.insertId, callback);
+        return getOne(result.rows[0].meal_id, callback);
     });
   });
 }
