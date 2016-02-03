@@ -68,7 +68,7 @@ app.delete('/meals/delete/:id', function(req, res) {
 
 function deleteItem(id, callback) {
   pg.connect(databaseUrl, function(err, client, done) {
-  		client.query('DELETE FROM meal_table WHERE meal_id=$1', [id], function(err, result) {
+  		client.query('DELETE FROM meal_table WHERE meal_id=$1', [id], function(err) {
         done();
        if (err) throw err;
   			return callback(null, {'id': id});
