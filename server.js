@@ -2,17 +2,16 @@
 
 var express = require('express');
 var bodyParser = require('body-parser');
-var pg = require('pg');
+var db = require('./dataBaserequests.js');
 var app = express();
 var port = process.env.PORT || 3000;
-var databaseUrl = process.env.DATABASE_URL || 'postgres://postgres:greenfox@localhost/calorie';
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
 
 app.get('/meals', function (req, res) {
-	getAll(function (err, result) {
+	db.getAll(function (err, result) {
 		if (err) {
 			console.error(err); res.send('Error ' + err);
 		}
@@ -22,18 +21,8 @@ app.get('/meals', function (req, res) {
 	});
 });
 
-function getAll(cb) {
-	pg.connect(databaseUrl, function(err, client, done) {
-		client.query('SELECT * FROM meal_table', function(err, result) {
-			done();
-			cb(err, result);
-		});
-	});
-}
-
-
 app.get('/meals/:id', function (req, res) {
-	getOne(req.params.id, function (err, result) {
+	db.getOne(req.params.id, function (err, result) {
 			if (err) {
 				console.error(err); res.send('Error ' + err);
 			}
@@ -45,18 +34,8 @@ app.get('/meals/:id', function (req, res) {
 });
 
 
-function getOne (id, cb) {
-	pg.connect(databaseUrl, function(err, client, done) {
-		console.log(err);
-		client.query('SELECT * FROM meal_table WHERE meal_id= $1', [id], function(err, result) {
-			done();
-			return cb(err, result);
-		});
-	});
-}
-
 app.delete('/meals/delete/:id', function(req, res) {
-  deleteItem(req.params.id, function(err, result) {
+  db.deleteItem(req.params.id, function(err, result) {
   	if (err) {
     		console.error(err); res.send('Error ' + err); 
     	} 
@@ -66,18 +45,10 @@ app.delete('/meals/delete/:id', function(req, res) {
 	  });
 });
 
-function deleteItem(id, callback) {
-  pg.connect(databaseUrl, function(err, client, done) {
-  		client.query('DELETE FROM meal_table WHERE meal_id=$1', [id], function(err) {
-        done();
-       if (err) throw err;
-  			return callback(null, {'id': id});
-  		});
-    });
-}
 
 app.post('/meals', function (req, res) {
-  addMealItem(req.body, function(err, result) {
+	// console.log('itt tart:', req.body);
+  db.addMealItem(req.body, function(err, result) {
     if (err) {
       console.error(err); res.send('Error ' + err);
     }
@@ -87,50 +58,6 @@ app.post('/meals', function (req, res) {
     }
   });
 });
-
-function addMealItem(itemDetails, callback) {
-  pg.connect(databaseUrl, function(err, client, done) {
-    client.query(
-      'INSERT INTO meal_table (name, calorie, date) VALUES ($1, $2, $3) returning meal_id',
-     [itemDetails.name, itemDetails.calorie, itemDetails.date],
-      function(err, result) {
-        done();
-        console.log('result: ', result);
-        return getOne(result.rows[0].meal_id, callback);
-    });
-  });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 app.listen(port, function() {
