@@ -42,7 +42,7 @@ function addMealItem(itemDetails, callback) {
      [itemDetails.name, itemDetails.calorie, itemDetails.date],
       function(err, result) {
         done();
-        console.log('result: ', + result.rows[0].meal_id);
+        console.log('result: ', result.rows[0].meal_id);
         return getOne(result.rows[0].meal_id, callback);
     });
   });
