@@ -2,17 +2,42 @@
 
 var express = require('express');
 var bodyParser = require('body-parser');
-var db = require('./dataBaseRequests.js');
 var app = express();
 var config = require('./config.js');
+var pg = require('pg');
+var databaseUrl = process.env.DATABASE_URL || config.localDatabasePort;
+var Meal = require('./dataBaseRequests.js');
+
 var port = process.env.PORT || config.localPort;
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
+function query(query, id, cb) {
+	pg.connect(databaseUrl, function(err, client, done) {
+		if (err) {
+			cb(err);
+		}
+		if (cb) {
+			client.query(query, id, function(err, result) {
+		  	done();
+			  cb(err, result);
+		  });
+		} else {
+			cb = id;
+			client.query(query, function(err, result) {
+		  	done();
+			  cb(err, result);
+		  });
+		}
+	});
+}
+
+var meal = new Meal(query);
+
 
 app.get('/meals', function (req, res) {
-	db.getAll(function (err, result) {
+	meal.getAll(function (err, result) {
 		if (err) {
 			console.error(err); res.send('Error ' + err);
 		}
@@ -23,7 +48,7 @@ app.get('/meals', function (req, res) {
 });
 
 app.get('/meals/:id', function (req, res) {
-	db.getOne(req.params.id, function (err, result) {
+	meal.getOne(req.params.id, function (err, result) {
 		if (err) {
 			console.error(err); res.send('Error ' + err);
 		} else {
@@ -34,7 +59,7 @@ app.get('/meals/:id', function (req, res) {
 
 
 app.delete('/meals/:id', function(req, res) {
-  db.deleteItem(req.params.id, function(err, result) {
+  meal.deleteItem(req.params.id, function(err, result) {
   	if (err) {
     	console.error(err); res.send('Error ' + err); 
   	} else {
@@ -45,7 +70,7 @@ app.delete('/meals/:id', function(req, res) {
 
 
 app.post('/meals', function (req, res) {
-  db.addMealItem(req.body, function(err, result) {
+  meal.addMealItem(req.body, function(err, result) {
     if (err) {
       console.error(err); res.send('Error ' + err);
     }	else {
