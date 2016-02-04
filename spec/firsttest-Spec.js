@@ -1,10 +1,9 @@
-describe("Player", function() {
-  var sayHello = require('../public/script/hello-world');
+'use strict';
 
-  it("should be able to play a Song", function() {
+describe('test the test', function() {
+	var test = require('../dataBaseRequests');
 
-    //demonstrates use of custom matcher
-    expect(sayHello()).toEqual('Hello!');
-  });
-
+	it('should give back Hello World', function() {
+		expect(test.helloWorld()).toEqual('hello world');
+	});
 });

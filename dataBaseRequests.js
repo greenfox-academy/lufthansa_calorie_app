@@ -14,24 +14,43 @@ function getAll(cb) {
 }
 
 
+
+function deleteItem(id, cb) {
+  pg.connect(databaseUrl, function(err, client, done) {
+		client.query('DELETE FROM meal_table WHERE meal_id=$1', [id], function() {
+  	  done();
+		return cb(null, {'id': id});
+  	});
+  });
+}
+
+// function getOne (id, cb) {
+// 	pg.connect(databaseUrl, function(err, client, done) {
+// 		client.query('SELECT * FROM meal_table WHERE meal_id= $1', [id], function(err, result) {
+// 			done();
+// 			return cb(err, result);
+// 		});
+// 	});
+// }
+
 function getOne (id, cb) {
-	pg.connect(databaseUrl, function(err, client, done) {
-		client.query('SELECT * FROM meal_table WHERE meal_id= $1', [id], function(err, result) {
-			done();
-			return cb(err, result);
-		});
+	console.log(id);
+	query('SELECT * FROM meal_table WHERE meal_id= $1', [id], function(err, result) {
+		cb(err, result);
 	});
 }
 
-
-function deleteItem(id, callback) {
-  pg.connect(databaseUrl, function(err, client, done) {
-  		client.query('DELETE FROM meal_table WHERE meal_id=$1', [id], function(err) {
-        done();
-       if (err) throw err;
-  			return callback(null, {'id': id});
-  		});
-    });
+function query(query, id, cb) {
+	var _id = id || null;
+	pg.connect(databaseUrl, function(err, client, done) {
+		if (err) {
+			cb(err);
+		}
+		client.query(query, _id, function(err, result) {
+			done();
+			cb(err, result);
+		});
+	});
 }
 
 
@@ -52,5 +71,5 @@ module.exports = {
 	getAll		: getAll, 
 	getOne		: getOne,
 	addMealItem	: addMealItem,
-	deleteItem	: deleteItem,
+	deleteItem	: deleteItem
 };
