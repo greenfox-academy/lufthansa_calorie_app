@@ -1,7 +1,8 @@
 'use strict';
 
 var pg = require('pg');
-var databaseUrl = process.env.DATABASE_URL || 'postgres://postgres:greenfox@localhost/calorie';
+var config = require('./config.js');
+var databaseUrl = process.env.DATABASE_URL || config.localDatabasePort;
 
 function getAll(cb) {
 	pg.connect(databaseUrl, function(err, client, done) {
@@ -15,7 +16,6 @@ function getAll(cb) {
 
 function getOne (id, cb) {
 	pg.connect(databaseUrl, function(err, client, done) {
-		console.log(err);
 		client.query('SELECT * FROM meal_table WHERE meal_id= $1', [id], function(err, result) {
 			done();
 			return cb(err, result);
@@ -42,7 +42,6 @@ function addMealItem(itemDetails, callback) {
      [itemDetails.name, itemDetails.calorie, itemDetails.date],
       function(err, result) {
         done();
-        console.log('result: ', result.rows[0].meal_id);
         return getOne(result.rows[0].meal_id, callback);
     });
   });
