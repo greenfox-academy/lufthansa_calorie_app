@@ -5,11 +5,11 @@ var ReactDOM = require('react-dom');
 
 var CalorieInput = React.createClass({
   getInitialState: function() {
-    return {text: '', calorie: '', date: Date.now()};
+    return {name: '', calorie: '', date: Date.now()};
   },
 
   mealOnChange: function(event) {
-    this.setState({text: event.target.value});
+    this.setState({name: event.target.value});
   },
 
   calorieOnChange: function(event) {
@@ -22,7 +22,7 @@ var CalorieInput = React.createClass({
 
   handleSubmit: function(event) {
     event.preventDefault();
-    console.log(this.state.text + ' ' + this.state.calorie + ' kCal' + ' ' + this.state.date);
+    console.log(this.state.name + ' ' + this.state.calorie + ' kCal' + ' ' + this.state.date);
   },
 
   render: function() {
@@ -30,7 +30,7 @@ var CalorieInput = React.createClass({
       <div>
         <h1>Calorie Counter</h1>
         <form onSubmit={this.handleSubmit}>
-          <input onChange={this.mealOnChange} value={this.state.text} placeholder="meal" />
+          <input onChange={this.mealOnChange} value={this.state.name} placeholder="meal" />
           <input onChange={this.calorieOnChange} value={this.state.calorie} placeholder="calorie" />
           <input type="datetime-local" onChange={this.dateOnChange} value={this.state.date} />
           <button>SUBMIT</button>
