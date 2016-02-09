@@ -2,6 +2,13 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+import FlatButton from 'material-ui/lib/flat-button';
+
+const FlatButtonExampleSimple = () => (
+  <div>
+    <FlatButton label="Default" />
+  </div>
+);
 
 var simpleArray = [];
 
