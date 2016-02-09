@@ -3,45 +3,44 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var simpleArray = [];
-
-var TodoList = React.createClass({
-  render: function() {
-    var createItem = function(item) {
-      return <li key={item.id}>{item.text}</li>;
-    };
-    return <ul>{this.props.items.map(createItem)}</ul>;
-  }
-});
-var TodoApp = React.createClass({
+var CalorieInput = React.createClass({
   getInitialState: function() {
-    return {items: [], text: ''};
+    return {text: '', calorie: '', date: Date.now()};
   },
-  onChange: function(e) {
 
-    this.setState({text: e.target.value});
+  mealOnChange: function(event) {
+    this.setState({text: event.target.value});
   },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    simpleArray.push(this.state.text);
-  	console.log(simpleArray);
-    var nextItems = this.state.items.concat([{text: this.state.text, id: Date.now()}]);
-    var nextText = '';
-    this.setState({items: nextItems, text: nextText});
+
+  calorieOnChange: function(event) {
+    this.setState({calorie: event.target.value});
   },
+
+  dateOnChange: function(event) {
+    this.setState({date: event.target.value});
+  },
+
+  handleSubmit: function(event) {
+    event.preventDefault();
+    console.log(this.state.text + ' ' + this.state.calorie + ' kCal' + ' ' + this.state.date);
+  },
+
   render: function() {
     return (
       <div>
-        <h3>TODO</h3>
-        <TodoList items={this.state.items} />
+        <h1>Calorie Counter</h1>
         <form onSubmit={this.handleSubmit}>
-          <input onChange={this.onChange} value={this.state.text} />
-          <button>{'Add #' + (this.state.items.length + 1)}</button>
+          <input onChange={this.mealOnChange} value={this.state.text} placeholder="meal" />
+          <input onChange={this.calorieOnChange} value={this.state.calorie} placeholder="calorie" />
+          <input type="datetime-local" onChange={this.dateOnChange} value={this.state.date} />
+          <button>SUBMIT</button>
         </form>
       </div>
-    );
+      );
   }
+
 });
 
 
-ReactDOM.render(<TodoApp />, document.getElementById('app'))
+
+ReactDOM.render(<CalorieInput />, document.getElementById('app'))
