@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = {
-  entry: "./client/index.js",
+  entry: './client/index.js',
   output: {
-    filename: "public/bundle.js"
+    filename: 'public/bundle.js'
   },
   module: {
     loaders: [
