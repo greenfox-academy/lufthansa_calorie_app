@@ -50,4 +50,13 @@ var CalorieInput = React.createClass({
 
 
 
+
+
+
+
+
+
+
+
+
 ReactDOM.render(<CalorieInput />, document.getElementById('app'))
