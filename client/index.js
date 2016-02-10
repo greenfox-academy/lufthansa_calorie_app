@@ -58,6 +58,7 @@ var CalorieInput = React.createClass({
 
     this.createRequest('POST', url, data, this.requestChecker)
     // console.log(data);
+    // console.log('lufi');
   },
 
   render: function() {
