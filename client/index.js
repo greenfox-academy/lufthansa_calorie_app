@@ -3,7 +3,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 import FlatButton from 'material-ui/lib/flat-button';
 
-var url = 'https://calorie-app8.herokuapp.com/meals' || 'http://localhost:3000/meals';
+
+var url = window.location + 'meals';
 
 const FlatButtonExampleSimple = () => (
   <div>
@@ -26,7 +27,7 @@ var createRequest = function(method, url, data, cb) {
 var MealList = React.createClass({
   render: function(response) {
     var createItem = function(meal) {
-      return <li>{meal.name} {meal.calorie}kCal {meal.date}</li>;
+      return <li key={meal.meal_id}>{meal.name} {meal.calorie}kCal {meal.date}</li>;
     };
     return <ul>{this.props.items.map(createItem)}</ul>;
   }
@@ -63,6 +64,7 @@ var CalorieInput = React.createClass({
     this.setState({date: event.target.value});
   },
 
+
   handleSubmit: function(event) {
     event.preventDefault();
     var dataToObject = {
@@ -71,7 +73,7 @@ var CalorieInput = React.createClass({
       date: this.state.date
     };
     var data = JSON.stringify(dataToObject);
-    createRequest('POST', url, data, getItems);
+    createRequest('POST', url, data, this.getItems);
 
   },
   render: function() {
