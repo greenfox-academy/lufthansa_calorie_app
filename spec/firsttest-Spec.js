@@ -1,6 +1,6 @@
 'use strict';
 
-var Meal = require('../dataBaseRequests');
+var Meal = require('../server/dataBaseRequests');
 
 describe('meal', function() {
 	it('should give back one item', function() {
