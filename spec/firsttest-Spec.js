@@ -31,7 +31,6 @@ describe('meal', function() {
 		  function query(query) {
 			 expect(query).toEqual('DELETE FROM meal_table WHERE meal_id=$1');
 		  }
-			
 		  var meal = new Meal(query);
 		  meal.deleteItem();
 			
