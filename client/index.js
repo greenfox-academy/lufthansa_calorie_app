@@ -4,6 +4,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 import FlatButton from 'material-ui/lib/flat-button';
 
+var url = 'http://localhost:3000/meals';
+
 const FlatButtonExampleSimple = () => (
   <div>
     <FlatButton label="Default" />
@@ -11,6 +13,23 @@ const FlatButtonExampleSimple = () => (
 );
 
 var CalorieInput = React.createClass({
+
+  createRequest: function(method, url, data, cb) {
+    var request = new XMLHttpRequest();
+    request.open(method, url, true);
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.send(data);
+    request.onreadystatechange = function() {
+      if (request.readyState === 4) {
+        cb(request.response);
+      }
+    }
+  },
+
+  requestChecker: function(data) {
+    console.log(data);
+  },
+
   getInitialState: function() {
     return {name: '', calorie: '', date: Date.now()};
   },
@@ -29,7 +48,16 @@ var CalorieInput = React.createClass({
 
   handleSubmit: function(event) {
     event.preventDefault();
-    console.log(this.state.name + ' ' + this.state.calorie + ' kCal' + ' ' + this.state.date);
+    var dataToObject = {
+      name: this.state.name,
+      calorie: this.state.calorie,
+      date: this.state.date
+    };
+    var data = JSON.stringify(dataToObject);
+    // this.requestChecker('')
+
+    this.createRequest('POST', url, data, this.requestChecker)
+    // console.log(data);
   },
 
   render: function() {
@@ -47,16 +75,5 @@ var CalorieInput = React.createClass({
   }
 
 });
-
-
-
-
-
-
-
-
-
-
-
 
 ReactDOM.render(<CalorieInput />, document.getElementById('app'))
