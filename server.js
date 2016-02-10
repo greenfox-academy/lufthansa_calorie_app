@@ -37,6 +37,7 @@ var meal = new Meal(query);
 
 
 app.get('/meals', function (req, res) {
+	console.log(req);
 	meal.getAll(function (err, result) {
 		if (err) {
 			console.error(err); res.send('Error ' + err);
@@ -70,6 +71,7 @@ app.delete('/meals/:id', function(req, res) {
 
 
 app.post('/meals', function (req, res) {
+  console.log(req.body);
   meal.addMealItem(req.body, function(err, result) {
     if (err) {
       console.error(err); res.send('Error ' + err);

@@ -4,51 +4,76 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 import FlatButton from 'material-ui/lib/flat-button';
 
+var url = 'http://localhost:3000/meals';
+
 const FlatButtonExampleSimple = () => (
   <div>
     <FlatButton label="Default" />
   </div>
 );
 
-var simpleArray = [];
+var CalorieInput = React.createClass({
 
-var TodoList = React.createClass({
-  render: function() {
-    var createItem = function(item) {
-      return <li key={item.id}>{item.text}</li>;
-    };
-    return <ul>{this.props.items.map(createItem)}</ul>;
-  }
-});
-var TodoApp = React.createClass({
+  createRequest: function(method, url, data, cb) {
+    var request = new XMLHttpRequest();
+    request.open(method, url, true);
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.send(data);
+    request.onreadystatechange = function() {
+      if (request.readyState === 4) {
+        cb(request.response);
+      }
+    }    
+  },
+
+  requestChecker: function(data) {
+    console.log(data);
+  },
+
   getInitialState: function() {
-    return {items: [], text: ''};
+    return {name: '', calorie: '', date: Date.now()};
   },
-  onChange: function(e) {
 
-    this.setState({text: e.target.value});
+  mealOnChange: function(event) {
+    this.setState({name: event.target.value});
   },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    simpleArray.push(this.state.text);
-  	console.log(simpleArray);
-    var nextItems = this.state.items.concat([{text: this.state.text, id: Date.now()}]);
-    var nextText = '';
-    this.setState({items: nextItems, text: nextText});
+
+  calorieOnChange: function(event) {
+    this.setState({calorie: event.target.value});
   },
+
+  dateOnChange: function(event) {
+    this.setState({date: event.target.value});
+  },
+
+  handleSubmit: function(event) {
+    event.preventDefault();
+    var dataToObject = {
+      name: this.state.name,
+      calorie: this.state.calorie,
+      date: this.state.date
+    };
+    var data = JSON.stringify(dataToObject);
+    // this.requestChecker('')
+
+    this.createRequest('POST', url, data, this.requestChecker)
+    // console.log(data);
+  },
+
   render: function() {
     return (
       <div>
-        <h3>TODO</h3>
-        <TodoList items={this.state.items} />
+        <h1>Calorie Counter</h1>
         <form onSubmit={this.handleSubmit}>
-          <input onChange={this.onChange} value={this.state.text} />
-          <button>{'Add #' + (this.state.items.length + 1)}</button>
+          <input onChange={this.mealOnChange} value={this.state.name} placeholder="meal" />
+          <input onChange={this.calorieOnChange} value={this.state.calorie} placeholder="calorie" />
+          <input type="datetime-local" onChange={this.dateOnChange} value={this.state.date} />
+          <button>SUBMIT</button>
         </form>
       </div>
-    );
+      );
   }
+
 });
 
-
-ReactDOM.render(<TodoApp />, document.getElementById('app'))
+ReactDOM.render(<CalorieInput />, document.getElementById('app'))
