@@ -3,7 +3,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 import FlatButton from 'material-ui/lib/flat-button';
 
-var url = 'https://calorie-app8.herokuapp.com/' || 'http://localhost:3000/meals';
+var url = 'https://calorie-app8.herokuapp.com/meals' || 'http://localhost:3000/meals';
 
 const FlatButtonExampleSimple = () => (
   <div>
