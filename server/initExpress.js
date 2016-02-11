@@ -1,12 +1,12 @@
 'use strict';
 
-
-function InitExpressServer(query) {
-	var express = require('express');
-	var bodyParser = require('body-parser');
-	var Meal = require('./dataBaseRequests.js');
-	var Service = require('./service.js');
+var express = require('express');
+var bodyParser = require('body-parser');
+var Meal = require('./dataBaseRequests.js');
+var Service = require('./service.js');
 	
+
+function initExpressServer(query) {
 	var app = express();
 	var meal = new Meal(query);
 	var service = new Service(meal);
@@ -22,4 +22,4 @@ function InitExpressServer(query) {
 	return app;
 }
 
-module.exports = InitExpressServer;
+module.exports = initExpressServer;

@@ -1,7 +1,7 @@
 'use strict';
 
 var request = require('supertest');
-var InitExpressServer = require('../server/initExpress.js');
+var initExpressServer = require('../server/initExpress.js');
 
 
 describe('when GET req sent', function () {
@@ -9,7 +9,7 @@ describe('when GET req sent', function () {
     callback(null, { rows: [{}] });
   };
   it('response format should be JSON', function(done) {
-    var app = new InitExpressServer(query);
+    var app = initExpressServer(query);
     request(app)
         .get('/meals')
         .expect('Content-Type', /json/)
@@ -26,7 +26,7 @@ describe('when POST req sent', function () {
     callback(null, {rows: [{}]});
   };
   it('response format should be JSON', function(done) {
-    var app = new InitExpressServer(query);
+    var app = initExpressServer(query);
     request(app)
         .post('/meals')
         .expect('Content-Type', /json/)
@@ -49,7 +49,7 @@ describe('Correct users returned', function () {
     callback(null, {rows: [{}]});
   };
   it('response format should be JSON', function(done) {
-    var app = new InitExpressServer(query);
+    var app = initExpressServer(query);
     request(app)
       .delete('/meals/:1')
       .expect('Content-Type', /json/)
@@ -72,7 +72,7 @@ var query = function(query, id, callback) {
     callback(null, {rows: [{}]});
   };
   it('response format should be JSON', function(done) {
-    var app = new InitExpressServer(query);
+    var app = initExpressServer(query);
     request(app)
         .get('/meals/:1')
         .expect('Content-Type', /json/)
