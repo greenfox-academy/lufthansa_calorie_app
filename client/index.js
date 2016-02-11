@@ -2,15 +2,12 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 import FlatButton from 'material-ui/lib/flat-button';
-
+import TextField from 'material-ui/lib/text-field';
+import DatePicker from 'material-ui/lib/date-picker/date-picker';
+import List from 'material-ui/lib/lists/list';
+import ListItem from 'material-ui/lib/lists/list-item';
 
 var url = window.location + 'meals';
-
-const FlatButtonExampleSimple = () => (
-  <div>
-    <FlatButton label="Default" />
-  </div>
-);
 
 var createRequest = function(method, url, data, cb) {
   var request = new XMLHttpRequest();
@@ -21,8 +18,11 @@ var createRequest = function(method, url, data, cb) {
     if (request.readyState === 4) {
       cb(request.response);
     }
-  }
-}
+  };
+};
+
+
+
 
 var MealList = React.createClass({
   render: function(response) {
@@ -56,6 +56,12 @@ var CalorieInput = React.createClass({
     this.setState({name: event.target.value});
   },
 
+  _handleChange: function(event, date) {
+    this.setState({
+      controlledDate: date,
+    });
+  },
+
   calorieOnChange: function(event) {
     this.setState({calorie: event.target.value});
   },
@@ -63,7 +69,6 @@ var CalorieInput = React.createClass({
   dateOnChange: function(event) {
     this.setState({date: event.target.value});
   },
-
 
   handleSubmit: function(event) {
     event.preventDefault();
@@ -77,14 +82,17 @@ var CalorieInput = React.createClass({
 
   },
   render: function() {
+
     return (
       <div>
         <h1>Calorie Counter</h1>
           <form onSubmit={this.handleSubmit}>
-            <input onChange={this.mealOnChange} value={this.state.name} placeholder="meal" />
-            <input onChange={this.calorieOnChange} value={this.state.calorie} placeholder="calorie" />
+            <TextField onChange={this.mealOnChange} value={this.state.name} hintText="Meal name" floatingLabelText="Meal name"/>
+            <TextField onChange={this.calorieOnChange} value={this.state.calorie} hintText="calorie amount" floatingLabelText="calorie amount"/>
             <input type="datetime-local" onChange={this.dateOnChange} value={this.state.date} />
-            <button>SUBMIT</button>
+              <div>
+                <FlatButton label="Submit" onClick = {this.handleSubmit}/>
+              </div>
           </form>
         <MealList items={this.state.items}/>
       </div>

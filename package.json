@@ -22,7 +22,9 @@
     "pg": "^4.4.4",
     "react": "0.14.7",
     "react-dom": "0.14.7",
-    "react-tap-event-plugin": "0.2.2"
+    "react-tap-event-plugin": "0.2.2",
+    "supertest": "1.1.0",
+    "underscore": "1.8.3"
   },
   "devDependencies": {
     "babel-core": "6.5.1",
