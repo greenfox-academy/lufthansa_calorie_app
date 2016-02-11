@@ -14,7 +14,7 @@ describe('when GET req sent', function () {
         .get('/meals')
         .expect('Content-Type', /json/)
         .expect(200)
-      .end(function (err, res) {
+        .end(function (err, res) {
         if (err) throw err;
         done();
       });
@@ -39,6 +39,51 @@ describe('when POST req sent', function () {
         else {
           expect(res.body).toEqual([{}]);
         }
+        done();
+      });
+  });
+});
+
+describe('Correct users returned', function () {
+  var query = function(query, id, callback) {
+    callback(null, {rows: [{}]});
+  };
+  it('response format should be JSON', function(done) {
+    var app = new InitExpressServer(query);
+    request(app)
+      .delete('/meals/:1')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) {
+          throw err;
+        }
+        else {
+          expect(res.body).toEqual('');
+        }
+        done();
+      });
+  });
+});
+
+
+describe('when GET req sent', function () {
+var query = function(query, id, callback) {
+    callback(null, {rows: [{}]});
+  };
+  it('response format should be JSON', function(done) {
+    var app = new InitExpressServer(query);
+    request(app)
+        .get('/meals/:1')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function (err, res) {
+        // if (err) {
+        //   throw err;
+        // }
+        // else {
+          expect(res.body).toEqual(Object({  }));
+        // }
         done();
       });
   });
