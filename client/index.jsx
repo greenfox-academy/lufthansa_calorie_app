@@ -9,6 +9,8 @@ import ListItem from 'material-ui/lib/lists/list-item';
 
 var url = window.location + 'meals';
 
+
+
 var createRequest = function(method, url, data, cb) {
   var request = new XMLHttpRequest();
   request.open(method, url, true);
@@ -22,9 +24,8 @@ var createRequest = function(method, url, data, cb) {
 };
 
 
-
-
 var MealList = React.createClass({
+  renderName: 'MealList',
   render: function(response) {
     var createItem = function(meal) {
       return <li key={meal.meal_id}>{meal.name} {meal.calorie}kCal {meal.date}</li>;
@@ -34,13 +35,12 @@ var MealList = React.createClass({
 })
 
 var CalorieInput = React.createClass({
-
+  renderName: 'CalorieInput',
   getInitialState: function() {
     return {items: [], name: '', calorie: '', date: Date.now()};
   },
 
   updateList: function(response) {
-    console.log(response);
     this.setState({items: JSON.parse(response)})
   },
 
@@ -100,6 +100,7 @@ var CalorieInput = React.createClass({
   }
 });
 
-ReactDOM.render(<CalorieInput />, document.getElementById('app'));
 
-// module.express = CalorieInput;
+module.exports = {
+ CalorieInput, MealList, createRequest
+}
