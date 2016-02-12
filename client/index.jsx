@@ -20,8 +20,8 @@ var MealList = React.createClass({
   }
 })
 
-var CalorieInput = React.createClass({
-  renderName: 'CalorieInput',
+var CalorieApp = React.createClass({
+  renderName: 'CalorieApp',
   getInitialState: function() {
     return {items: [], name: '', calorie: '', date: Date.now()};
   },
@@ -42,7 +42,7 @@ var CalorieInput = React.createClass({
     this.setState({name: event.target.value});
   },
 
-  _handleChange: function(event, date) {
+  handleChange: function(event, date) {
     this.setState({
       controlledDate: date,
     });
@@ -88,5 +88,5 @@ var CalorieInput = React.createClass({
 
 
 module.exports = {
- CalorieInput, MealList, createRequest
+ CalorieApp, MealList, createRequest
 }
