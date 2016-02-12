@@ -1,12 +1,12 @@
 'use strict';
 
-jest.dontMock('../client/index.js');
+jest.dontMock('../client/index.jsx');
 
 import React from 'react';
 import ReactDOM from'react-dom';
 import TestUtils from'react-addons-test-utils';
 
-var CalorieInput = require('../client/index.js');
+var CalorieInput = require('../client/index.jsx');
 
 describe('CalorieInput', function() {
 

@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react');
 var ReactDOM = require('react-dom');
+var createRequest = require('./httprequest.js');
 import FlatButton from 'material-ui/lib/flat-button';
 import TextField from 'material-ui/lib/text-field';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
@@ -9,22 +10,8 @@ import ListItem from 'material-ui/lib/lists/list-item';
 
 var url = window.location + 'meals';
 
-var createRequest = function(method, url, data, cb) {
-  var request = new XMLHttpRequest();
-  request.open(method, url, true);
-  request.setRequestHeader('Content-Type', 'application/json');
-  request.send(data);
-  request.onreadystatechange = function() {
-    if (request.readyState === 4) {
-      cb(request.response);
-    }
-  };
-};
-
-
-
-
 var MealList = React.createClass({
+  renderName: 'MealList',
   render: function(response) {
     var createItem = function(meal) {
       return <li key={meal.meal_id}>{meal.name} {meal.calorie}kCal {meal.date}</li>;
@@ -33,14 +20,13 @@ var MealList = React.createClass({
   }
 })
 
-var CalorieInput = React.createClass({
-
+var CalorieApp = React.createClass({
+  renderName: 'CalorieApp',
   getInitialState: function() {
     return {items: [], name: '', calorie: '', date: Date.now()};
   },
 
   updateList: function(response) {
-    console.log(response);
     this.setState({items: JSON.parse(response)})
   },
 
@@ -56,7 +42,7 @@ var CalorieInput = React.createClass({
     this.setState({name: event.target.value});
   },
 
-  _handleChange: function(event, date) {
+  handleChange: function(event, date) {
     this.setState({
       controlledDate: date,
     });
@@ -100,6 +86,7 @@ var CalorieInput = React.createClass({
   }
 });
 
-ReactDOM.render(<CalorieInput />, document.getElementById('app'));
 
-// module.express = CalorieInput;
+module.exports = {
+ CalorieApp, MealList, createRequest
+}
