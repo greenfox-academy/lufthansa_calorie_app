@@ -1,44 +1,14 @@
 'use strict';
 var React = require('react');
 var ReactDOM = require('react-dom');
+var createRequest = require('./httprequest.js');
 import FlatButton from 'material-ui/lib/flat-button';
 import TextField from 'material-ui/lib/text-field';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 
-var createRequest = require('./httprequest.js');
-
 var url = window.location + 'meals';
-
-<<<<<<< HEAD:client/index.js
-// var createRequest = function(method, url, data, cb) {
-//   var request = new XMLHttpRequest();
-//   request.open(method, url, true);
-//   request.setRequestHeader('Content-Type', 'application/json');
-//   request.send(data);
-//   request.onreadystatechange = function() {
-//     if (request.readyState === 4) {
-//       cb(request.response);
-//     }
-//   };
-// };
-=======
-
-
-var createRequest = function(method, url, data, cb) {
-  var request = new XMLHttpRequest();
-  request.open(method, url, true);
-  request.setRequestHeader('Content-Type', 'application/json');
-  request.send(data);
-  request.onreadystatechange = function() {
-    if (request.readyState === 4) {
-      cb(request.response);
-    }
-  };
-};
->>>>>>> f3b945c018c0c5cf419a0a13e389788a2a0bd9c3:client/index.jsx
-
 
 var MealList = React.createClass({
   renderName: 'MealList',
