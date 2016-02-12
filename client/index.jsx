@@ -11,6 +11,7 @@ var createRequest = require('./httprequest.js');
 
 var url = window.location + 'meals';
 
+<<<<<<< HEAD:client/index.js
 // var createRequest = function(method, url, data, cb) {
 //   var request = new XMLHttpRequest();
 //   request.open(method, url, true);
@@ -22,11 +23,25 @@ var url = window.location + 'meals';
 //     }
 //   };
 // };
+=======
 
 
+var createRequest = function(method, url, data, cb) {
+  var request = new XMLHttpRequest();
+  request.open(method, url, true);
+  request.setRequestHeader('Content-Type', 'application/json');
+  request.send(data);
+  request.onreadystatechange = function() {
+    if (request.readyState === 4) {
+      cb(request.response);
+    }
+  };
+};
+>>>>>>> f3b945c018c0c5cf419a0a13e389788a2a0bd9c3:client/index.jsx
 
 
 var MealList = React.createClass({
+  renderName: 'MealList',
   render: function(response) {
     var createItem = function(meal) {
       return <li key={meal.meal_id}>{meal.name} {meal.calorie}kCal {meal.date}</li>;
@@ -36,13 +51,12 @@ var MealList = React.createClass({
 })
 
 var CalorieInput = React.createClass({
-
+  renderName: 'CalorieInput',
   getInitialState: function() {
     return {items: [], name: '', calorie: '', date: Date.now()};
   },
 
   updateList: function(response) {
-    console.log(response);
     this.setState({items: JSON.parse(response)})
   },
 
@@ -102,6 +116,7 @@ var CalorieInput = React.createClass({
   }
 });
 
-ReactDOM.render(<CalorieInput />, document.getElementById('app'));
 
-// module.express = CalorieInput;
+module.exports = {
+ CalorieInput, MealList, createRequest
+}
