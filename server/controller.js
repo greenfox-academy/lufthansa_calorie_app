@@ -1,6 +1,6 @@
 'use strict';
 
-function Service(query) {
+function Controller(query) {
   var me = this;
   this.getAll = function (request, response) {
     query.getAll(function (err, result) {
@@ -36,4 +36,4 @@ function Service(query) {
   };
 }
 
-module.exports = Service;
+module.exports = Controller;
