@@ -1,11 +1,11 @@
 'use strict';
 
-var config =require('./config.js');
+var config = require('./config.js');
 var pg = require('pg');
-var databaseUrl = process.env.DATABASE_URL || config.localDatabasePort;
+var port = config.PORT_FOR_DATABASE;
 
 function query(query, id, cb) {
-	pg.connect(databaseUrl, function(err, client, done) {
+	pg.connect(port, function(err, client, done) {
 		if (err) {
 			cb(err);
 		}
