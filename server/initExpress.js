@@ -2,14 +2,14 @@
 
 var express = require('express');
 var bodyParser = require('body-parser');
-var Meal = require('./dataBaseRequests.js');
+var DataBaseRequests = require('./dataBaseRequests.js');
 var Service = require('./service.js');
 	
 
-function initExpressServer(query) {
+function initExpressServer(dataBaseQuery) {
 	var app = express();
-	var meal = new Meal(query);
-	var service = new Service(meal);
+	var dataBaseRequests = new DataBaseRequests(dataBaseQuery);
+	var service = new Service(dataBaseRequests);
 
 	app.use(express.static('public'));
 	app.use(bodyParser.json());

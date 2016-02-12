@@ -44,7 +44,7 @@ describe('when POST req sent', function () {
   });
 });
 
-describe('Correct users returned', function () {
+describe('when DELETE req sent', function () {
   var query = function(query, id, callback) {
     callback(null, {rows: [{}]});
   };
@@ -78,12 +78,7 @@ var query = function(query, id, callback) {
         .expect('Content-Type', /json/)
         .expect(200)
         .end(function (err, res) {
-        // if (err) {
-        //   throw err;
-        // }
-        // else {
           expect(res.body).toEqual(Object({  }));
-        // }
         done();
       });
   });

@@ -1,10 +1,10 @@
 'use strict';
 
-function Meal(query) {
+function DataBaseRequests(query) {
 	var me = this;
 
 	this.addMealItem = function(itemDetails, callback) {
-  	query('INSERT INTO meal_table (name, calorie, date) VALUES ($1, $2, $3) returning meal_id',
+  		query('INSERT INTO meal_table (name, calorie, date) VALUES ($1, $2, $3) returning meal_id',
   			   [itemDetails.name, itemDetails.calorie, itemDetails.date], function(err, result) {
   				me.getOne(result.rows[0].meal_id, callback);
 		});
@@ -29,4 +29,4 @@ function Meal(query) {
 	};
 }
 
-module.exports = Meal;
+module.exports = DataBaseRequests;
