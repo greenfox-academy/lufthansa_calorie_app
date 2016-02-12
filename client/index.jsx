@@ -14,7 +14,7 @@ var MealList = React.createClass({
   renderName: 'MealList',
   render: function(response) {
     var createItem = function(meal) {
-      return <li key={meal.meal_id}>{meal.name} {meal.calorie}kCal {meal.date}</li>;
+      return <li key={meal.meal_id}>{meal.name}  {meal.calorie}kCal  {meal.date}</li>;
     };
     return <ul>{this.props.items.map(createItem)}</ul>;
   }
@@ -71,16 +71,18 @@ var CalorieApp = React.createClass({
 
     return (
       <div>
-        <h1>Calorie Counter</h1>
-          <form onSubmit={this.handleSubmit}>
-            <TextField onChange={this.mealOnChange} value={this.state.name} hintText="Meal name" floatingLabelText="Meal name"/>
-            <TextField onChange={this.calorieOnChange} value={this.state.calorie} hintText="calorie amount" floatingLabelText="calorie amount"/>
-            <input type="datetime-local" onChange={this.dateOnChange} value={this.state.date} />
-              <div>
-                <FlatButton label="Submit" onClick = {this.handleSubmit}/>
-              </div>
-          </form>
-        <MealList items={this.state.items}/>
+        <main>
+          <h1>Calorie Counter</h1>
+            <form onSubmit={this.handleSubmit}>
+              <TextField onChange={this.mealOnChange} value={this.state.name} hintText="Meal name" floatingLabelText="Meal name"/>
+              <TextField onChange={this.calorieOnChange} value={this.state.calorie} hintText="calorie amount" floatingLabelText="calorie amount"/>
+              <input type="datetime-local" onChange={this.dateOnChange} value={this.state.date} />
+                <div>
+                  <FlatButton label="Submit" onClick = {this.handleSubmit}/>
+                </div>
+              <MealList items={this.state.items}/>
+            </form>
+          </main>
       </div>
       );
   }

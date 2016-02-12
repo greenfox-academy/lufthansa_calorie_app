@@ -1,0 +1,33 @@
+body {
+  background-image: url(background01.jpg);
+  background-color: #FCFCFC;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #404040;
+  font-family: Arial, sans-serif;
+  margin: 0px;
+  padding: 0px;
+  text-align: left;
+}
+
+h1 {
+  color: #004D40;
+  font-size: 42px;
+  margin: 10px 0px 15px 0px;
+  padding: 10px 20px 10px 20px;
+  text-align: center;
+}
+
+main {
+  background-color: white;
+  border-radius: 10px;
+  margin: 2vw 25vw 2vw 25vw;
+  min-width: 397px;
+  opacity: 0.95;
+  opacity: 80%;
+  padding: 25px;
+}
+
+list {
+    color: #004D40;
+}
