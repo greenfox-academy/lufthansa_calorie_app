@@ -100,4 +100,6 @@ var CalorieInput = React.createClass({
   }
 });
 
-Module.express = CalorieInput;
+ReactDOM.render(<CalorieInput />, document.getElementById('app'));
+
+// module.express = CalorieInput;
