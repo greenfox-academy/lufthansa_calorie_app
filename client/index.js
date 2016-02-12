@@ -7,19 +7,21 @@ import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 
+var createRequest = require('./httprequest.js');
+
 var url = window.location + 'meals';
 
-var createRequest = function(method, url, data, cb) {
-  var request = new XMLHttpRequest();
-  request.open(method, url, true);
-  request.setRequestHeader('Content-Type', 'application/json');
-  request.send(data);
-  request.onreadystatechange = function() {
-    if (request.readyState === 4) {
-      cb(request.response);
-    }
-  };
-};
+// var createRequest = function(method, url, data, cb) {
+//   var request = new XMLHttpRequest();
+//   request.open(method, url, true);
+//   request.setRequestHeader('Content-Type', 'application/json');
+//   request.send(data);
+//   request.onreadystatechange = function() {
+//     if (request.readyState === 4) {
+//       cb(request.response);
+//     }
+//   };
+// };
 
 
 
