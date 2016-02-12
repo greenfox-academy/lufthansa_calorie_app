@@ -1,6 +1,6 @@
 'use strict';
 
-function Meal(query) {
+function DataBaseRequests(query) {
 	var me = this;
 
 	this.addMealItem = function(itemDetails, callback) {
@@ -29,4 +29,4 @@ function Meal(query) {
 	};
 }
 
-module.exports = Meal;
+module.exports = DataBaseRequests;
